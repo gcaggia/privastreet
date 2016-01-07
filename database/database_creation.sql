@@ -1,5 +1,5 @@
 -- database :
-
+-- test
 use privastreet;
 
 -- User Table structure
