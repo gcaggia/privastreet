@@ -12,7 +12,9 @@
     "autoload": {
         "psr-4": {
             "AppDatabase\\": "database/",
-            "appClass\\": "model/"
+            "appClass\\": "model/",
+            "AppControler\\":"controler/",
+            "AppVue\\":"vue/"
         }
     }
 }
