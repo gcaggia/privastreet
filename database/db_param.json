@@ -1,0 +1,6 @@
+{
+    "dbHost"     : "127.0.0.1",
+    "dbName"     : "PRIVASTREET",
+    "dbUser"     : "PRIVA_USER",
+    "dbPassword" : "priva123"
+}
