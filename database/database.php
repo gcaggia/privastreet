@@ -72,4 +72,29 @@ class Database
     {
 
     }
+
+    public function queryLaunch($query, $args)
+    {
+        $nbargs = count($args);
+
+        if (empty($requete) || !is_string($requete)
+            || preg_match('##(\"|\')+##', $requete) !== 0) {
+            throw new Exception('Error with the format of your SQL Query  : ' .
+                '<br>' . $query);
+        }
+
+        try {
+            $statement = $this->_oPDO->prepare($query);
+
+            if ($statement !== false) {
+                $statement->execute($args);
+            }
+
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return false;
+        }
+
+        return $statement;
+    }
 }
