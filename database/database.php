@@ -59,6 +59,11 @@ class Database
         return self::$_connexion;
     }
 
+    private function getDb()
+    {
+        return $this->_oPDO;
+    }
+
     public function __toString()
     {
         return  'dbHost     : ' . $this->_dbHost . '<br>' .
@@ -73,21 +78,15 @@ class Database
 
     }
 
-    public function queryLaunch($query, $args)
+    public function queryLaunch($sql, $params = null)
     {
-        $nbargs = count($args);
-
-        if (empty($requete) || !is_string($requete)
-            || preg_match('##(\"|\')+##', $requete) !== 0) {
-            throw new Exception('Error with the format of your SQL Query  : ' .
-                '<br>' . $query);
-        }
 
         try {
-            $statement = $this->_oPDO->prepare($query);
-
-            if ($statement !== false) {
-                $statement->execute($args);
+            if ($params == null) {
+                $results = $this->getDb()->query($sql);
+            } else {
+                $results = $this->getDb()->prepare($sql);
+                $results->execute($params);
             }
 
         } catch (Exception $e) {
@@ -95,6 +94,7 @@ class Database
             return false;
         }
 
-        return $statement;
+        $results->setFetchMode(PDO::FETCH_OBJ);
+        return $results;
     }
 }
